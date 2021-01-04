@@ -12,7 +12,7 @@
 # Hackathon
 
 It is a traditional hackathon conducted in last week of the MRND course, every year. This year the Goal was to build a IPL Clone using the data provided. The Hackathon had several goal, each increasing in complexity and adding extra layer to previous goal.
-The List of Goals/Objectives is given in [`IPL clone - MRND 2019.pdf`](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/psrabhishek/IPL-MRND-Django/25e6d8a05bd45dc75d5b6b1b60fb99e0793b3202/IPL%20clone%20-%20MRND%202019.pdf)
+The List of Goals/Objectives is given in [`IPL clone - MRND 2019.pdf`](https://github.com/psrabhishek/IPL-MRND-Django/blob/main/IPL%20clone%20-%20MRND%202019.pdf)
 
 ## Learning
 
