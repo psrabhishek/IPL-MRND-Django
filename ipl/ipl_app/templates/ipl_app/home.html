@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{%block title %}
+    Home
+{% endblock %}
+
+{%block heading %}
+    IPL Home - {{season}}
+{% endblock %}
+
+{% block body %}
+
+    <table class="table title is-1">
+
+        <tr>
+            <th>Champions:</th>
+            <td style="cursor: pointer;" onclick="location='{% url 'team_html' champion %}' ">
+                <img src="{{icon}}" style="max-height: 40px;"/> {{champion}}
+            </td>
+        </tr>
+
+    </table>
+
+    <hr/>
+    <span class="title">Points Table</span>
+    <br/>
+    <br/>
+    <table border="1px" class="table is-striped is-fullwidth is-hoverable">
+    <tr>
+        <th>Team</th>
+        <th>Matches Played</th>
+        <th>Wins</th>
+        <th>Loss</th>
+        <th>Points</th>
+
+    </tr>
+    <!--</table>-->
+    <!--<table id="data" border="1px" class="table is-striped is-fullwidth is-hoverable">-->
+        {%for team in teams%}
+            <tr style="cursor: pointer;" onclick="location='{% url 'team_html' team.0 %}' ">
+                <td>{{team.0}}</td>
+                <td>{{team.1}}</td>
+                <td>{{team.2}}</td>
+                <td>{{team.3}}</td>
+                <td>{{team.4}}</td>
+            </tr>
+        {% endfor%}
+    </table>
+    <hr/>
+    <span class="title">Other Links</span>
+    <br/>
+    <br/>
+    <span class="subtitle has-text-link" style="cursor: pointer;" onclick="location='{% url 'season_home'%}' ">All Matches</span>
+
+{% endblock %}

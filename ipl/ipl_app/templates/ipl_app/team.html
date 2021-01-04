@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{%block title %}
+    {{title}}
+{% endblock %}
+
+{%block heading %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+    <div  style="display: block;width: 36%; margin: auto; ">
+            <div style="float:left;">
+
+                    <div class="is-centered">
+                        <img src={{logo}} alt="{{match.team1}} logo" style="max-height: 150px;display:block; margin:auto;">
+                    </div>
+                    <div class="card-content">
+                        <span class="title"> {{team}} </span>
+                    </div>
+            </div>
+    </div>
+
+    <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+    <hr/>
+
+    <div class="tabs" id="tabs">
+        <ul>
+            {% for i in seasons %}
+                <li {% if i == latest_season %} class="is-active" {% endif %} data-tab="{{i}}"><a>{{i}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="tab-content">
+        {% for i, val in details.items %}
+            <table {% if i == latest_season %} class="table is-striped is-fullwidth is-hoverable is-active" {%else%} class="table is-striped is-fullwidth is-hoverable" {% endif %} data-content="{{i}}">
+                <caption class="title">{{val.0}}</caption>
+                <tr>
+                    <th>Date</th>
+                    <th>team1</th>
+                    <th>team2</th>
+                    <th>venue</th>
+                    <th>Toss</th>
+                    <th>Decision</th>
+                    <th>Result</th>
+                    <th>P.O.M</th>
+
+                </tr>
+                    {%for match in val.1%}
+                        <tr style="cursor: pointer;" onclick="location='{% url 'match_html' i match.mid %}'">
+                            <td>{{match.date}}</td>
+                            <td>{{match.team1}}</td>
+                            <td>{{match.team2}}</td>
+                            <td>{{match.venue}}</td>
+                            <td>{{match.toss_winner}}</td>
+                            <td>{{match.toss_decision}}</td>
+                            <td>{{match.result}}</td>
+                            <td>{{match.player_of_match}}</td>
+                        </tr>
+                    {% endfor%}
+            </table>
+        {% endfor %}
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+          $('#tabs li').on('click', function() {
+            var tab = $(this).data('tab');
+
+            $('#tabs li').removeClass('is-active');
+            $(this).addClass('is-active');
+
+            $('#tab-content table').removeClass('is-active');
+            $('table[data-content="' + tab + '"]').addClass('is-active');
+            console.log(tab);
+          });
+        });
+    </script>
+{% endblock %}

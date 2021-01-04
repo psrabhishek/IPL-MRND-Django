@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{%block title %}
+    Season {{ season }}
+{% endblock %}
+
+{%block heading %}
+    Match {{matchno}}
+{% endblock %}
+
+{% block body %}
+    <div class="tabs" id="tabs">
+        <ul>
+            <li class="is-active" data-tab="1"><a>innings 1</a></li>
+            <li data-tab="2"><a>innings 2</a></li>
+        </ul>
+    </div>
+
+    <div id="tab-content">
+
+        <div  style="display: block;">
+            <div style="float:left;">
+
+                    <div class="is-centered">
+                        <img src={{t1logo}} alt="{{match.team1}} logo" style="max-height: 150px;display:block; margin:auto;">
+                    </div>
+                    <div class="card-content">
+
+                        <span class="title" onclick="location='{% url 'team_html' match.team1 %}'"> {{match.team1}} </span>
+
+                        <br/><br/>
+                        <table class="is-active" data-content="1">
+                            {% for player in t1i1 %}
+                                <tr><td>{{player}}</td></tr>
+                            {% endfor %}
+                        </table>
+
+                        <table data-content="2">
+                            {% for player in t1i2 %}
+                            <tr><td>{{player}}</td></tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+            </div>
+
+            <div style="float:right;">
+                <div class="is-centered">
+                        <img src={{t2logo}} alt="{{match.team2}} logo" style="max-height: 150px;display:block; margin:auto;">
+                </div>
+
+                <div class="card-content">
+                    <span class="title" onclick="location='{% url 'team_html' match.team2 %}'">{{match.team2}}</span>
+                    <br/><br/>
+                    <table class="is-active" data-content="1">
+                        {% for player in t2i1 %}
+                        <tr><td>{{player}}</td></tr>
+                        {% endfor %}
+                    </table>
+
+                    <table data-content="2">
+                        {% for player in t2i2 %}
+                        <tr><td>{{player}}</td></tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+            <table style="display: block;" class="table">
+                <tr><th>Toss</th><td>{{match.toss_winner}}, Chose to  {{match.toss_decision}}</td></tr>
+                <tr>
+                    <th>Winner</th>
+                    <td>{% if match.result == "normal"%}
+                            {{match.winner}}, by
+                            {%if match.win_by_runs%}
+                                {{match.win_by_runs}} runs
+                            {% else %}
+                                {{match.win_by_wickets}} wickets
+                            {% endif%}
+                        {% else %}
+                            {{ match.result }}
+                        {%endif%}
+                    </td>
+                </tr>
+            </table>
+
+
+                <table border="1px" class="table is-striped is-fullwidth is-hoverable is-active" data-content="1">
+                    <tr>
+                        <th>Over</th>
+                        <th>Ball</th>
+                        <th>Batsman</th>
+                        <th>Non-Strike</th>
+                        <th>bowler</th>
+                        <th></th>
+                    </tr>
+                    {% for delivery in deliveries1 %}
+                        <tr>
+                            <td>{{delivery.over}}</td>
+                            <td>{{delivery.ball}}</td>
+                            <td>{{delivery.batsman}}</td>
+                            <td>{{delivery.non_striker}}</td>
+                            <td>{{delivery.bowler}}</td>
+                            <td>
+                                {% if delivery.player_dismissed %}
+                                    {{delivery.dismissal_kind}}
+                                    {% if delivery.fielder %}
+                                        by {{delivery.fielder}}
+                                    {% endif%}
+                                {% else %}
+                                    {{delivery.total_runs}} runs
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor%}
+                </table>
+
+                <table border="1px" class="table is-striped is-fullwidth is-hoverable" data-content="2" >
+                    <tr>
+                        <th>Over</th>
+                        <th>Ball</th>
+                        <th>Batsman</th>
+                        <th>Non-Strike</th>
+                        <th>bowler</th>
+                        <th></th>
+                    </tr>
+                    {% for delivery in deliveries2 %}
+                        <tr>
+                            <td>{{delivery.over}}</td>
+                            <td>{{delivery.ball}}</td>
+                            <td>{{delivery.batsman}}</td>
+                            <td>{{delivery.non_striker}}</td>
+                            <td>{{delivery.bowler}}</td>
+                            <td>
+                                {% if delivery.player_dismissed %}
+                                    {{delivery.dismissal_kind}}
+                                    {% if delivery.fielder %}
+                                        by {{delivery.fielder}}
+                                    {% endif%}
+                                {% else %}
+                                    {{delivery.total_runs}} runs
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor%}
+                </table>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            if (location.hash) {
+                var tab = location.hash[1];
+                $('#tabs li').removeClass('is-active');
+                $('li[data-tab="' + tab + '"]').addClass('is-active');
+
+                $('#tab-content table').removeClass('is-active');
+                $('table[data-content="' + tab + '"]').addClass('is-active');
+            }
+          $('#tabs li').on('click', function() {
+            var tab = $(this).data('tab');
+
+            $('#tabs li').removeClass('is-active');
+            $(this).addClass('is-active');
+
+            $('#tab-content table').removeClass('is-active');
+            $('table[data-content="' + tab + '"]').addClass('is-active');
+             location.hash = tab;
+          });
+    });
+
+    setTimeout(function(){
+       window.location.reload(1);
+    }, 5000);
+
+</script>
+{% endblock %}

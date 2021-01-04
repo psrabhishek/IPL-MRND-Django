@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{%block title %}
+    Season {{ season }}
+{% endblock %}
+
+{%block heading %}
+    Season {{ season}} Matches
+{% endblock %}
+
+{% block body %}
+
+<span class="subtitle">select season:</span>
+    <select id = "season" onchange="goToNewPage()" style="margin-bottom:5px;">
+        {% for i in seasons %}
+            <option {% if i == season%} selected{%endif%} >{{i}}</option>
+        {%endfor%}
+    </select>
+
+
+    <table border="1px" class="table is-striped is-fullwidth is-hoverable">
+    <tr>
+        <th>Team</th>
+        <th>Matches Played</th>
+        <th>Wins</th>
+        <th>Loss</th>
+        <th>Points</th>
+
+    </tr>
+    <!--</table>-->
+    <!--<table id="data" border="1px" class="table is-striped is-fullwidth is-hoverable">-->
+        {%for team in teams%}
+            <tr style="cursor: pointer;" onclick="location='{% url 'team_html' team.0 %}' ">
+                <td>{{team.0}}</td>
+                <td>{{team.1}}</td>
+                <td>{{team.2}}</td>
+                <td>{{team.3}}</td>
+                <td>{{team.4}}</td>
+            </tr>
+        {% endfor%}
+    </table>
+    <script>
+        function goToNewPage()
+        {
+            var value = document.getElementById('season').value;
+            if(value != 'none') {
+                window.location = "http://127.0.0.1:8000/pointstable/" + value;
+            }
+        }
+    </script>
+{% endblock %}

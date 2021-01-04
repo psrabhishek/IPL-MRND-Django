@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{%block title %}
+    Season {{ season }}
+{% endblock %}
+
+{%block heading %}
+    Season {{ season}} Matches
+{% endblock %}
+
+{% block body %}
+
+<span class="subtitle">select season:</span>
+    <select id = "season" onchange="goToNewPage()" style="margin-bottom:5px;">
+        {% for i in seasons %}
+            <option {% if i == season%} selected{%endif%} >{{i}}</option>
+        {%endfor%}
+    </select>
+
+
+    <table id="data" border="1px" class="table is-striped is-fullwidth is-hoverable">
+    <tr>
+        <th>Date</th>
+        <th>team1</th>
+        <th>team2</th>
+        <th>venue</th>
+        <th>Toss</th>
+        <th>Decision</th>
+        <th>Result</th>
+        <th>P.O.M</th>
+
+    </tr>
+    <!--</table>-->
+    <!--<table id="data" border="1px" class="table is-striped is-fullwidth is-hoverable">-->
+        {%for match in matches%}
+            <tr style="cursor: pointer;" onclick="location='{% url 'match_html' season match.mid %}'">
+                <td>{{match.date}}</td>
+                <td>{{match.team1}}</td>
+                <td>{{match.team2}}</td>
+                <td>{{match.venue}}</td>
+                <td>{{match.toss_winner}}</td>
+                <td>{{match.toss_decision}}</td>
+                <td>{{match.result}}</td>
+                <td>{{match.player_of_match}}</td>
+            </tr>
+        {% endfor%}
+    </table>
+    <script>
+        function goToNewPage()
+        {
+            var value = document.getElementById('season').value;
+            if(value != 'none') {
+                window.location = "http://127.0.0.1:8000/season/" + value;
+            }
+        }
+    </script>
+{% endblock %}

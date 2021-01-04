@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{%block title %}
+    Admin
+{% endblock %}
+
+{%block heading %}
+    Admin Home
+{% endblock %}
+
+{% block body %}
+
+<button class="has-text-link" onclick="location='{% url 'add_match' %}'">Add New Match</button>
+<button class="has-text-link" onclick="location='{% url 'add_ball' %}'">Add New Ball with commentary</button>
+{% endblock %}
